@@ -9,9 +9,9 @@
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>demo-spring-boot-autoconfigure</module>
-        <module>demo-spring-boot-starter</module>
-        <module>demo-starter2</module>
+        <module>demo2-spring-boot-autoconfigure</module>
+        <module>demo2-spring-boot-starter</module>
+        <module>demo2-starter</module>
     </modules>
 
     <description>
