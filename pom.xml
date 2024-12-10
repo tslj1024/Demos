@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+      此情可待成追忆
+            只是当时已茫然
+      -->
+
+    <!-- 基本项目信息 -->
+    <groupId>top.tslj</groupId>
+    <artifactId>Demos</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <name>Demos</name>
+    <description>关于 Java 相关生态的演示项目</description>
+    <url>https://github.com/tslj1024/Demos</url>
+
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <id>tslj</id>
+            <name>泰上老菌</name>
+            <email>tslj1024@163.com</email>
+            <roles>
+                <role>Administrator</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <!-- 许可证信息 -->
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <!-- 属性定义 -->
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <lib.path>lib/</lib.path>
+        <bin.path>bin/</bin.path>
+        <resources.path>resources/</resources.path>
+
+        <main-class>top.tslj.demos.Main</main-class> <!-- 一般子模块都要重新定义 -->
+
+        <revision>1.0</revision>
+        <spring-boot.version>3.2.4</spring-boot.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+        <hutool.version>5.8.34</hutool.version>
+        <vavr.version>0.10.4</vavr.version>
+        <fastjson2.version>2.0.51</fastjson2.version>
+        <jansi.version>2.4.0</jansi.version>
+        <idgenerator.version>1.0.6</idgenerator.version>
+    </properties>
+
+    <!-- 依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- vavr - turns java™ upside down -->
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>${vavr.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2-extension</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2-extension-spring6</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <!-- 在控制台输出彩色 -->
+            <dependency>
+                <groupId>org.fusesource.jansi</groupId>
+                <artifactId>jansi</artifactId>
+                <version>${jansi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.yitter</groupId>
+                <artifactId>yitter-idgenerator</artifactId>
+                <version>${idgenerator.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 构建配置 -->
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <resources>
+            <!-- 打包过程中，打进包里的静态资源，就是从这里配置的子集中 选取的 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/${bin.path}</outputDirectory>
+                        <archive>
+                            <manifest>
+                                <!-- https://blog.csdn.net/shaofengzong/article/details/121191018 -->
+                                <useUniqueVersions>false</useUniqueVersions>
+                                <!-- 添加类路径 -->
+                                <addClasspath>true</addClasspath>
+                                <!-- 类路径前缀 -->
+                                <classpathPrefix>../${lib.path}</classpathPrefix>
+                                <mainClass>${main-class}</mainClass>
+                            </manifest>
+                            <manifestEntries>
+                                <!-- 添加额外类路径 -->
+                                <Class-Path>../${resources.path}</Class-Path>
+                            </manifestEntries>
+                        </archive>
+                        <includes>
+                            <!-- 这里会包含打进包里的资源，包括类文件，还有从 build.resources.resource 中选取的子集-->
+                            <include>**/*.class</include>
+                            <include>**/*Mapper.xml</include>
+                            <include>META-INF/**</include>
+                            <include>logback.xml</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+
+                <!-- 拷贝依赖到指定目录 -->
+                <!-- Maven Dependency Plugin to copy dependencies to lib directory -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <configuration>
+                        <!--排除依赖 provided 作用域-->
+                        <excludeScope>provided</excludeScope>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id> <!--执行的唯一标识符，这里是 copy-dependencies-->
+                            <phase>package</phase> <!--指定执行的生命周期阶段，这里是 package，表示在 package 阶段执行。-->
+                            <goals>
+                                <goal>copy-dependencies</goal> <!--指定一个用途-->
+                            </goals>
+                            <configuration>
+                                <!--输出路径-->
+                                <outputDirectory>${project.build.directory}/${lib.path}</outputDirectory>
+                                <!--是否覆盖已存在的发布版本依赖文件-->
+                                <overWriteReleases>false</overWriteReleases>
+                                <!--是否覆盖已存在的快照版本依赖文件-->
+                                <overWriteSnapshots>false</overWriteSnapshots>
+                                <!--是否在目标文件比源文件新时覆盖-->
+                                <overWriteIfNewer>true</overWriteIfNewer>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/${resources.path}</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>src/main/resources</directory>
+                                        <filtering>true</filtering>
+                                        <includes>
+                                            <include>**/*.properties</include>
+                                            <include>**/*.yml</include>
+                                            <include>**/*.yaml</include>
+                                            <include>**/*.xml</include>
+                                            <include>**/*.json</include>
+                                            <include>**/*.toml</include>
+                                            <include>**/*.txt</include>
+                                        </includes>
+                                        <excludes>
+                                            <exclude>**/*Mapper.xml</exclude>
+                                            <exclude>logback.xml</exclude>
+                                        </excludes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <!-- 由于不是默认引入的 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- TODO 配置环境属性 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+                <log.path>log</log.path>
+                <log.level>INFO</log.level>
+                <port>8000</port>
+                <db.url>jdbc:mysql://localhost:3306/dev_db</db.url>
+                <db.user>dev_user</db.user>
+                <db.password>dev_password</db.password>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+                <port>8081</port>
+                <db.url>jdbc:mysql://prod-server:3306/prod_db</db.url>
+                <db.user>prod_user</db.user>
+                <db.password>prod_password</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+                <port>8081</port>
+                <db.url>jdbc:mysql://prod-server:3306/prod_db</db.url>
+                <db.user>prod_user</db.user>
+                <db.password>prod_password</db.password>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
