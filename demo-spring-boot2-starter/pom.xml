@@ -11,7 +11,7 @@
     <modules>
         <module>demo-spring-boot-autoconfigure</module>
         <module>demo-spring-boot-starter</module>
-        <module>demo</module>
+        <module>demo-starter2</module>
     </modules>
 
     <description>
