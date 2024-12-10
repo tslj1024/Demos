@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽象渐变与玻璃拟态效果</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: 
+      radial-gradient(circle at 70% 30%, #663399, transparent),
+      conic-gradient(from 45deg, #9966cc, #cc99ff, #663399, #cc99ff, #9966cc),
+      linear-gradient(135deg, #663399, #9966cc);
+  }
+
+  .glassmorphic-card {
+    position: relative;
+    width: 320px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+  }
+
+  .glassmorphic-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 16px 64px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .glassmorphic-card::before,
+  .glassmorphic-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .glassmorphic-card::before {
+    background: 
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(30deg) scale(1.5);
+  }
+
+  .glassmorphic-card::after {
+    background: 
+      radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(-30deg) scale(1.2);
+  }
+
+  /* 内部元素样式 */
+  .glassmorphic-card p {
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    animation: fadeIn 2s ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glassmorphic-card">
+  <p>玻璃拟态卡片</p>
+</div>
+
+</body>
+</html>

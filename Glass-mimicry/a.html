@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<style>
+        body{
+  height: 100vh;
+  background: radial-gradient(
+      circle at 60% 90%,
+      rgba(46, 103, 161, 1),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 20px 20px,
+      rgba(46, 103, 161, 0.8),
+      transparent 25%
+    ),
+    #182336;
+}
+*{
+  margin:0;
+  padding:0;
+}
+.card{
+  color:rgba(99, 190, 189,0.3);
+  position:absolute;
+  right:100px;
+  bottom:50px;
+  z-index:10;
+  text-align:center;
+  width:300px;
+  height:500px;
+  border-bottom:1px solid rgba(255,255,255,0.4);
+  border-left:1px solid rgba(255,255,255,0.4);
+  background:linear-gradient(to top right,rgba(90,149,207,0.3),rgba(58,76,99,0.3));
+  box-shadow:10px -10px 20px rgba(0,0,0,0.2);
+  backdrop-filter:blur(8px);
+  border-radius:20px;
+  transform:rotate(-15deg);
+}
+h1{
+  margin-top:50px;
+}
+h2{
+  margin-top:250px;
+}
+h3,h4{
+  padding-left:60px;
+  text-align:left;
+}
+
+h3{
+  margin:40px;
+  text-transform: uppercase;
+}
+h4{
+  margin-top:10px;
+}
+.circle{
+  width:160px;
+  height:160px;
+  position:absolute;
+  bottom:30px;
+  right:240px;
+  background:linear-gradient(to top left,rgb(135,116,249),rgb(75,162,237));
+  border-radius:80px;
+}
+.rect{
+  width:160px;
+  height:160px;
+  position:absolute;
+  right:90px;
+  bottom:380px;
+  background:linear-gradient(
+  to top left,
+    rgba(135,116,249,0.9),
+    rgba(75,162,237,0.9)
+  );
+  border-radius:20px;
+}
+/* .idea-circle {
+    background: radial-gradient(circle at 196.6px 129px, rgb(22, 125, 255) 0%, rgba(22, 125, 255, 0) calc(0% + 200px)) no-repeat border-box border-box rgba(0, 0, 0, 0);
+} */
+.idea-circle {
+    --circle-center-x: 50%;
+    --circle-center-y: 50%;
+    background: radial-gradient(circle at var(--circle-center-x) var(--circle-center-y), rgb(22, 125, 255) 0%, rgba(22, 125, 255, 0) calc(0% + 200px)) no-repeat border-box border-box rgba(0, 0, 0, 0);
+}
+    </style>
+</head>
+
+<body >
+    <!-- style="" -->
+    <div id="myDiv" style="width: 400px; height: 280px; margin: 50px; transition: background 1s ease;--circle-center-x: 50%; --circle-center-y: 50%; background-color: #252528;">
+        将鼠标移入此区域
+    </div>
+    <div id="myDiv1" style="width: 400px; height: 280px; margin: -100px; z-index:3; background-color: #252528;">
+        将鼠标移入此区域
+    </div>
+    <div class="card" id="card">
+        <h1>Visa Card</h1>
+        <h2>6228 8076 2232 8768</h2>
+        <h3>The ICBC</h3>
+        <h4>03 / 29</h4>
+      </div>
+      <div class="circle"></div>
+       <div class="rect"></div>
+       <script>
+// 获取目标div元素
+const myDiv = document.getElementById('myDiv');
+
+// 添加鼠标进入事件监听器
+myDiv.addEventListener('mouseenter', (event) => {
+// 获取div元素相对于视口的位置
+const rect = myDiv.getBoundingClientRect();
+
+// 计算鼠标相对于div左上角的位置
+const relativeX = event.clientX - rect.left;
+const relativeY = event.clientY - rect.top;
+
+// 动态设置CSS变量
+myDiv.style.setProperty('--circle-center-x', `${relativeX}px`);
+myDiv.style.setProperty('--circle-center-y', `${relativeY}px`);
+});
+
+// 添加鼠标移动事件监听器
+myDiv.addEventListener('mousemove', (event) => {
+// 添加类并首次更新背景
+myDiv.classList.add('idea-circle');
+    // 获取div元素相对于视口的位置
+const rect = myDiv.getBoundingClientRect();
+
+// 计算鼠标相对于div左上角的位置
+const relativeX = event.clientX - rect.left;
+const relativeY = event.clientY - rect.top;
+
+// 动态设置CSS变量
+myDiv.style.setProperty('--circle-center-x', `${relativeX}px`);
+myDiv.style.setProperty('--circle-center-y', `${relativeY}px`);
+});
+
+// 添加鼠标离开事件监听器
+myDiv.addEventListener('mouseleave', (event) => {
+    // 移除类并恢复默认背景（如果需要）
+    myDiv.classList.remove('idea-circle');
+    myDiv.style.removeProperty('--circle-center-x');
+    myDiv.style.removeProperty('--circle-center-y');
+});
+
+
+
+
+
+
+const card = document.getElementById('card');
+
+// 添加鼠标进入事件监听器
+card.addEventListener('mouseenter', (event) => {
+// 获取div元素相对于视口的位置
+const rect = card.getBoundingClientRect();
+
+// 计算鼠标相对于div左上角的位置
+const relativeX = event.clientX - rect.left;
+const relativeY = event.clientY - rect.top;
+
+// 动态设置CSS变量
+card.style.setProperty('--circle-center-x', `${relativeX}px`);
+card.style.setProperty('--circle-center-y', `${relativeY}px`);
+});
+
+// 添加鼠标移动事件监听器
+card.addEventListener('mousemove', (event) => {
+// 添加类并首次更新背景
+card.classList.add('idea-circle');
+    // 获取div元素相对于视口的位置
+const rect = card.getBoundingClientRect();
+
+// 计算鼠标相对于div左上角的位置
+const relativeX = event.clientX - rect.left;
+const relativeY = event.clientY - rect.top;
+
+// 动态设置CSS变量
+card.style.setProperty('--circle-center-x', `${relativeX}px`);
+card.style.setProperty('--circle-center-y', `${relativeY}px`);
+});
+
+// 添加鼠标离开事件监听器
+card.addEventListener('mouseleave', (event) => {
+    // 移除类并恢复默认背景（如果需要）
+    card.classList.remove('idea-circle');
+    card.style.removeProperty('--circle-center-x');
+    card.style.removeProperty('--circle-center-y');
+});
+
+       </script>
+</body>
