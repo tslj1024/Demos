@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>top.tslj</groupId>
+    <artifactId>demo-spring-boot2-starter</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>demo-spring-boot-autoconfigure</module>
+        <module>demo-spring-boot-starter</module>
+        <module>demo</module>
+    </modules>
+
+    <description>
+        对于导入其他模块中的 configuration bean ，有两种方式：
+            1. @Import(DemoConfiguration.class)
+            public @interface EnableDemo {
+            }
+            在主类上启用即可
+
+            2.  spring.factories
+            # 被动注入
+            org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+            top.tslj.dsb2s.DemoConfiguration
+    </description>
+
+</project>
